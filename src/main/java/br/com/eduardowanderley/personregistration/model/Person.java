@@ -1,10 +1,14 @@
 package br.com.eduardowanderley.personregistration.model;
 
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Entity
 public class Person {
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String name;
@@ -17,10 +21,13 @@ public class Person {
 
     private LocalDate birthDate;
 
+    @OneToMany(mappedBy = "person", orphanRemoval = true, cascade = CascadeType.ALL)
     List<Phone> phones;
 
+    @ManyToOne
     private Address address;
 
+    @ManyToOne
     private Occupation occupation;
 
     public Person() {

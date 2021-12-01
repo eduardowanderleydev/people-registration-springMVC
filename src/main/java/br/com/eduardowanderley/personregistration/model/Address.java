@@ -1,6 +1,16 @@
 package br.com.eduardowanderley.personregistration.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Address {
+
+    @Id
+    @GeneratedValue
+    private long id;
+
     private String cep;
 
     private String rua;
@@ -62,5 +72,13 @@ public class Address {
 
     public void setIbge(String ibge) {
         this.ibge = ibge;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
