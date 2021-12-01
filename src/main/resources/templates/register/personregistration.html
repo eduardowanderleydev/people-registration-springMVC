@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <h5>Registration Page</h5>
+
+    <form>
+        <div>
+            <h6>Personal Data :</h6>
+
+            <label>Id :</label>
+            <input type="text" name="id" id="person-id" readonly="readonly" placeholder="Automatically generated">
+
+            <label>Name :</label>
+            <input type="text" name="name" id="person-name" placeholder="Type person name">
+
+            <label>LastName : </label>
+            <input type="text" name="lastName" id="person-lastname" placeholder="Type person last name">
+        </div>
+        <br>
+
+        <div>
+            <label>Age : </label>
+            <input type="text" name="age" id="person-age" placeholder="Type person age">
+
+            <label class="active">Occupation : </label>
+            <select>
+                <option>Dev</option>
+                <option>Tester</option>
+                <option>Manager</option>
+            </select>
+        </div>
+
+        <div>
+            <label class="active">Gender : </label>
+            <select>
+                <option value="" disabled="disabled" selected="selected">--[Select]--</option>
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+            </select>
+
+            <div>
+                <label for="birthDate" class="active">Birth Date : </label>
+                <input type="date" name="birthDate" id="birthDate" placeholder="Type the birth date">
+            </div>
+        </div>
+
+        <div>
+            <h6>Adress :</h6>
+
+            <br> <br>
+
+            <div>
+
+                <div>
+                    <label>Cep : </label>
+                    <input type="text" name="cep" id="cep" placeholder="Type a valid CEP">
+                </div>
+
+                <div>
+                    <label>Street : </label>
+                    <input type="text" name="rua" id="rua" placeholder="Automatically generated">
+                </div>
+
+            </div>
+
+            <div>
+
+                <div>
+                    <label>District : </label>
+                    <input type="text" name="bairro" id="bairro" placeholder="Automatically generated">
+                </div>
+
+                <div>
+                    <label>City : </label>
+                    <input type="text" name="bairro" id="cidade" placeholder="Automatically generated">
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    <label>UF : </label>
+                    <input type="text" name="uf" id="uf" placeholder="Automatically generated">
+                </div>
+
+                <div>
+                    <label>IBGE : </label>
+                    <input type="text" name="ibge" id="ibge" placeholder="Automatically generated">
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" name="button">Save</button>
+
+                <button type="reset">Clean</button>
+            </div>
+        </div>
+    </form>
+
+    <br/> <br/>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>LastName</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+
+        <tr>
+            <td>1</td>
+            <td>Eduardo</td>
+            <td>Wanderley</td>
+            <td><a>Edit</a>
+            </td>
+            <td><a>Delete</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
