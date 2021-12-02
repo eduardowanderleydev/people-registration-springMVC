@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Registration</title>
 </head>
 <body>
 <div>
@@ -14,13 +14,15 @@
             <h6>Personal Data :</h6>
 
             <label>Id :</label>
-            <input type="text" name="id" id="person-id" readonly="readonly" th:field="*{id}" placeholder="Automatically generated">
+            <input type="text" name="id" id="person-id" readonly="readonly" th:field="*{id}"
+                   placeholder="Automatically generated">
 
             <label>Name :</label>
             <input type="text" name="name" id="person-name" th:field="*{name}" placeholder="Type person name">
 
             <label>LastName : </label>
-            <input type="text" name="lastName" id="person-lastname" th:field="*{lastName}" placeholder="Type person last name">
+            <input type="text" name="lastName" id="person-lastname" th:field="*{lastName}"
+                   placeholder="Type person last name">
         </div>
         <br>
 
@@ -30,9 +32,7 @@
 
             <label>Occupation : </label>
             <select th:field="*{occupation}">
-                <option th:value="1">Dev</option>
-                <option th:value="2">Tester</option>
-                <option th:value="3">Manager</option>
+                <option th:each="o : ${occupations}" th:value="${o.id}" th:text="${o.name}"></option>
             </select>
         </div>
 
@@ -46,7 +46,8 @@
 
             <div>
                 <label for="birthDate">Birth Date : </label>
-                <input type="date" name="birthDate" id="birthDate" th:field="*{birthDate}" placeholder="Type the birth date">
+                <input type="text" name="birthDate" id="birthDate" th:field="*{birthDate}"
+                       placeholder="Type the birth date">
             </div>
         </div>
 
@@ -64,7 +65,8 @@
 
                 <div>
                     <label>Street : </label>
-                    <input type="text" name="rua" id="rua" th:field="*{address.rua}" placeholder="Automatically generated">
+                    <input type="text" name="rua" id="rua" th:field="*{address.rua}"
+                           placeholder="Automatically generated">
                 </div>
 
             </div>
@@ -73,12 +75,14 @@
 
                 <div>
                     <label>District : </label>
-                    <input type="text" name="bairro" id="bairro" th:field="*{address.bairro}" placeholder="Automatically generated">
+                    <input type="text" name="bairro" id="bairro" th:field="*{address.bairro}"
+                           placeholder="Automatically generated">
                 </div>
 
                 <div>
                     <label>City : </label>
-                    <input type="text" name="cidade" id="cidade" th:field="*{address.cidade}" placeholder="Automatically generated">
+                    <input type="text" name="cidade" id="cidade" th:field="*{address.cidade}"
+                           placeholder="Automatically generated">
                 </div>
             </div>
 
@@ -90,7 +94,8 @@
 
                 <div>
                     <label>IBGE : </label>
-                    <input type="text" name="ibge" id="ibge" th:field="*{address.ibge}" placeholder="Automatically generated">
+                    <input type="text" name="ibge" id="ibge" th:field="*{address.ibge}"
+                           placeholder="Automatically generated">
                 </div>
             </div>
 
@@ -115,14 +120,12 @@
         </tr>
         </thead>
 
-        <tr>
-            <td>1</td>
-            <td>Eduardo</td>
-            <td>Wanderley</td>
-            <td><a>Edit</a>
-            </td>
-            <td><a>Delete</a>
-            </td>
+        <tr th:each="person : ${peoplelist}">
+            <td th:text="${person.id}"></td>
+            <td th:text="${person.name}"></td>
+            <td th:text="${person.lastName}"></td>
+            <td><a>Edit</a></td>
+            <td><a>Delete</a></td>
         </tr>
     </table>
 </div>
