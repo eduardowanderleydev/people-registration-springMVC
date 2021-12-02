@@ -20,4 +20,9 @@ public class PersonService {
     public List<Person> findAll() {
         return (List<Person>) personRepository.findAll();
     }
+
+    public Person findById(Long personid) {
+        // TODO change IllegalException for some personalized exception
+        return personRepository.findById(personid).orElseThrow(() -> new IllegalArgumentException());
+    }
 }

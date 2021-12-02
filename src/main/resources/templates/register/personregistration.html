@@ -138,7 +138,9 @@
 
         <tr th:each="person : ${peoplelist}">
             <td th:text="${person.id}"></td>
-            <td th:text="${person.name}"></td>
+            <td><a th:href="@{/phones/{personid}(personid=${person.id})}">
+                <span th:text="${person.name}"></span>
+            </a> </td>
             <td th:text="${person.lastName}"></td>
             <td><a>Edit</a></td>
             <td><a>Delete</a></td>
