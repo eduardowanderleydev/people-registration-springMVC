@@ -4,6 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Registration</title>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
 <body>
 <div>
@@ -46,7 +50,7 @@
 
             <div>
                 <label for="birthDate">Birth Date : </label>
-                <input type="text" name="birthDate" id="birthDate" th:field="*{birthDate}"
+                <input type="text" name="birthDate" class="datepicker" id="birthDate" th:field="*{birthDate}"
                        placeholder="Type the birth date">
             </div>
         </div>
@@ -129,5 +133,64 @@
         </tr>
     </table>
 </div>
+
+<script>
+    $(document).ready(
+        function () {
+            // load the datepicker
+            $('.datepicker').datepicker({
+                format: "mm-dd-yyyy"
+            });
+
+            function cleanForm() {
+                $("#rua").val("");
+                $("#bairro").val("");
+                $("#cidade").val("");
+                $("#uf").val("");
+                $("#ibge").val("");
+            }
+
+            $("#cep").blur(
+                function () {
+
+                    var cep = $(this).val().replace(/\D/g, '');
+
+                    if (cep != "") {
+                        var validacep = /^[0-9]{8}$/;
+
+                        if (validacep.test(cep)) {
+
+                            $("#rua").val("...");
+                            $("#bairro").val("...");
+                            $("#cidade").val("...");
+                            $("#uf").val("...");
+                            $("#ibge").val("...");
+
+                            $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?",
+                                function (dados) {
+                                    if (!("erro" in dados)) {
+                                        $("#rua").val(dados.logradouro);
+                                        $("#bairro").val(dados.bairro);
+                                        $("#cidade").val(dados.localidade);
+                                        $("#uf").val(dados.uf);
+                                        $("#ibge").val(dados.ibge);
+                                    } else {
+                                        //cannot found CEP
+                                        cleanForm();
+                                        alert("CEP not found.");
+                                    }
+                                });
+                        } else {
+                            //invalid CEP
+                            cleanForm();
+                            alert("Invalid cep format");
+                        }
+                    } else {
+                        cleanForm();
+                    }
+                });
+        });
+</script>
+
 </body>
 </html>
