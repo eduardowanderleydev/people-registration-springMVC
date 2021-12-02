@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Person {
@@ -31,7 +32,7 @@ public class Person {
     private Address address;
 
     @ManyToOne
-    private Occupation occupation;
+    private Occupation personOccupation;
 
     public Person() {
     }
@@ -100,11 +101,24 @@ public class Person {
         this.address = address;
     }
 
-    public Occupation getOccupation() {
-        return occupation;
+    public Occupation getPersonOccupation() {
+        return personOccupation;
     }
 
-    public void setOccupation(Occupation occupation) {
-        this.occupation = occupation;
+    public void setPersonOccupation(Occupation occupation) {
+        this.personOccupation = occupation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person)) return false;
+        Person person = (Person) o;
+        return Objects.equals(getId(), person.getId()) && Objects.equals(getName(), person.getName()) && Objects.equals(getLastName(), person.getLastName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getLastName());
     }
 }

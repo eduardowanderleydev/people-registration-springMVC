@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.util.Objects;
 
 @Entity
 public class Phone {
@@ -50,5 +51,18 @@ public class Phone {
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Phone)) return false;
+        Phone phone = (Phone) o;
+        return Objects.equals(getId(), phone.getId()) && Objects.equals(getNumber(), phone.getNumber()) && Objects.equals(getPerson(), phone.getPerson());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getNumber(), getPerson());
     }
 }

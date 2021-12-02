@@ -21,10 +21,6 @@
 
             <h6>Personal Data :</h6>
 
-            <label>Id :</label>
-            <input type="text" name="id" id="person-id" readonly="readonly" th:field="*{id}"
-                   placeholder="Automatically generated">
-
             <div class="row">
                 <div class="input-field col s6">
                     <label>Name :</label>
@@ -62,7 +58,7 @@
                 </div>
                 <div class="input-field col s6">
                     <label for="birthDate">Birth Date : </label>
-                    <input type="text" name="birthDate" class="datepicker" id="birthDate" th:field="*{birthDate}"
+                    <input type="text" name="birthDate" id="birthDate" th:field="*{birthDate}"
                            placeholder="Type the birth date">
                 </div>
             </div>
@@ -78,11 +74,11 @@
             <div class="row">
                 <div class="input-field col s6">
                     <label>Cep : </label>
-                    <input type="text" name="cep" id="cep" th:field="*{address.cep}" placeholder="Type a valid CEP">
+                    <input type="text" name="cep" id="cep" th:field="*{cep}" placeholder="Type a valid CEP">
                 </div>
                 <div class="input-field col s6">
                     <label>Street : </label>
-                    <input type="text" name="rua" id="rua" th:field="*{address.rua}"
+                    <input type="text" name="rua" id="rua" th:field="*{rua}"
                            placeholder="Automatically generated">
                 </div>
             </div>
@@ -90,13 +86,13 @@
             <div class="row">
                 <div class="input-field col s6">
                     <label>District : </label>
-                    <input type="text" name="bairro" id="bairro" th:field="*{address.bairro}"
+                    <input type="text" name="bairro" id="bairro" th:field="*{bairro}"
                            placeholder="Automatically generated">
                 </div>
 
                 <div class="input-field col s6">
                     <label>City : </label>
-                    <input type="text" name="cidade" id="cidade" th:field="*{address.cidade}"
+                    <input type="text" name="cidade" id="cidade" th:field="*{cidade}"
                            placeholder="Automatically generated">
                 </div>
             </div>
@@ -104,13 +100,13 @@
             <div class="row">
                 <div class="input-field col s6">
                     <label>UF : </label>
-                    <input type="text" name="uf" id="uf" th:field="*{address.uf}"
+                    <input type="text" name="uf" id="uf" th:field="*{uf}"
                            placeholder="Automatically generated">
                 </div>
 
                 <div class="input-field col s6">
                     <label>IBGE : </label>
-                    <input type="text" name="ibge" id="ibge" th:field="*{address.ibge}"
+                    <input type="text" name="ibge" id="ibge" th:field="*{ibge}"
                            placeholder="Automatically generated">
                 </div>
             </div>
@@ -136,12 +132,12 @@
         </tr>
         </thead>
 
-        <tr th:each="person : ${peoplelist}">
-            <td th:text="${person.id}"></td>
-            <td><a th:href="@{/phones/{personid}(personid=${person.id})}">
-                <span th:text="${person.name}"></span>
+        <tr th:each="p : ${peoplelist}">
+            <td th:text="${p.id}"></td>
+            <td><a th:href="@{/phones/{personid}(personid=${p.id})}">
+                <span th:text="${p.name}"></span>
             </a> </td>
-            <td th:text="${person.lastName}"></td>
+            <td th:text="${p.lastName}"></td>
             <td><a>Edit</a></td>
             <td><a>Delete</a></td>
         </tr>

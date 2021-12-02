@@ -1,7 +1,6 @@
 package br.com.eduardowanderley.personregistration.controller;
 
-import br.com.eduardowanderley.personregistration.model.Person;
-import br.com.eduardowanderley.personregistration.model.Phone;
+import br.com.eduardowanderley.personregistration.controller.dto.phone.PhoneDTO;
 import br.com.eduardowanderley.personregistration.service.PersonService;
 import br.com.eduardowanderley.personregistration.service.PhoneService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,19 +24,15 @@ public class PhoneController {
     @GetMapping("/{personid}")
     public String loadPhonePage(@PathVariable("personid") Long personid, Model model) {
         model.addAttribute("phones", phoneService.findByPerson(personid));
-        Person person = personService.findById(personid);
-        model.addAttribute("person", person);
+        model.addAttribute("person", personService.findById(personid));
         return "register/phoneregistration";
     }
 
     @PostMapping("/save/{idperson}")
-    public String addPhoneUser(Phone phone, @PathVariable("idperson") Long personid) {
+    public String addPhoneUser(PhoneDTO phone, @PathVariable("idperson") Long personid) {
+        phoneService.save(phone, personid);
 
-        Person person = personService.findById(personid);
-        phone.setPerson(person);
-        phoneService.save(phone);
-
-        return "redirect:/phones/" + person.getId();
+        return "redirect:/phones/" + personid;
     }
 
 }

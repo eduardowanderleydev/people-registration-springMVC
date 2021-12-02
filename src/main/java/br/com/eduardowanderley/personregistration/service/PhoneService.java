@@ -1,11 +1,16 @@
 package br.com.eduardowanderley.personregistration.service;
 
+import br.com.eduardowanderley.personregistration.controller.dto.phone.PhoneDTO;
+import br.com.eduardowanderley.personregistration.mapper.PhoneMapper;
+import br.com.eduardowanderley.personregistration.model.Person;
 import br.com.eduardowanderley.personregistration.model.Phone;
+import br.com.eduardowanderley.personregistration.repository.PersonRepository;
 import br.com.eduardowanderley.personregistration.repository.PhoneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PhoneService {
@@ -13,16 +18,27 @@ public class PhoneService {
     @Autowired
     private PhoneRepository phoneRepository;
 
-    public List<Phone> findAll() {
-        return (List<Phone>) phoneRepository.findAll();
+    @Autowired
+    private PersonRepository personRepository;
+
+    @Autowired
+    private PhoneMapper mapper;
+
+    public List<PhoneDTO> findAll() {
+        return phoneRepository.findAll().stream().map(phone -> new PhoneDTO(phone)).collect(Collectors.toList());
     }
 
-    public List<Phone> findByPerson(Long personid) {
+    public List<PhoneDTO> findByPerson(Long personid) {
         // TODO change IllegalException for some personalized exception
-        return phoneRepository.findPhonesByPerson(personid);
+        return phoneRepository.findPhonesByPerson(personid).stream().map(phone -> new PhoneDTO(phone)).collect(Collectors.toList());
     }
 
-    public void save(Phone phone) {
+    public void save(PhoneDTO phoneDTO, Long personId) {
+        Phone phone = mapper.changePhoneDtoToPhone(phoneDTO);
+        Person person = personRepository.findById(personId).orElseThrow(() -> new RuntimeException());
+        phone.setPerson(person);
+
         phoneRepository.save(phone);
     }
+
 }

@@ -1,6 +1,6 @@
 package br.com.eduardowanderley.personregistration.controller;
 
-import br.com.eduardowanderley.personregistration.model.Person;
+import br.com.eduardowanderley.personregistration.controller.dto.person.PersonFormDTO;
 import br.com.eduardowanderley.personregistration.service.OccupationService;
 import br.com.eduardowanderley.personregistration.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +22,16 @@ public class PersonController {
 
     @GetMapping("/register")
     public String loadRegisterPage(Model model) {
-        model.addAttribute("person", new Person());
+        model.addAttribute("person", new PersonFormDTO());
         model.addAttribute("peoplelist", personService.findAll());
         model.addAttribute("occupations", occupationService.findAll());
         return "register/personregistration";
     }
 
     @PostMapping("/save")
-    public String save(Person person) {
+    public String save(PersonFormDTO personDTO) {
 
-        personService.save(person);
+        personService.save(personDTO);
         return "redirect:/person/register";
     }
 
