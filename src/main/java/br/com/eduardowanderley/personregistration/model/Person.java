@@ -1,6 +1,8 @@
 package br.com.eduardowanderley.personregistration.model;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -19,12 +21,13 @@ public class Person {
 
     private String gender;
 
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private LocalDate birthDate;
 
     @OneToMany(mappedBy = "person", orphanRemoval = true, cascade = CascadeType.ALL)
     List<Phone> phones;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Address address;
 
     @ManyToOne

@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<div class="container">
+<div>
     <h5>Registration Page</h5>
 
     <form th:object="${person}" th:action="save" method="post">
@@ -29,16 +28,16 @@
             <label>Age : </label>
             <input type="text" name="age" id="person-age" th:field="*{age}" placeholder="Type person age">
 
-            <label class="active">Occupation : </label>
+            <label>Occupation : </label>
             <select th:field="*{occupation}">
-                <option th:value="dev">Dev</option>
-                <option th:value="tester">Tester</option>
-                <option th:value="Manager">Manager</option>
+                <option th:value="1">Dev</option>
+                <option th:value="2">Tester</option>
+                <option th:value="3">Manager</option>
             </select>
         </div>
 
         <div>
-            <label class="active">Gender : </label>
+            <label>Gender : </label>
             <select th:field="*{gender}">
                 <option value="" disabled="disabled" selected="selected">--[Select]--</option>
                 <option value="MALE">Male</option>
@@ -46,7 +45,7 @@
             </select>
 
             <div>
-                <label for="birthDate" class="active">Birth Date : </label>
+                <label for="birthDate">Birth Date : </label>
                 <input type="date" name="birthDate" id="birthDate" th:field="*{birthDate}" placeholder="Type the birth date">
             </div>
         </div>
