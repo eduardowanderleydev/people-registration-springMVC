@@ -13,3 +13,9 @@ INSERT INTO PERSON(id, age, birth_date, gender , last_name, name, address_id, oc
 INSERT INTO PERSON(id, age, birth_date, gender , last_name, name, address_id, occupation_id) VALUES (3, 19, TO_DATE('07-02-1998', 'MM-DD-YYYY'), 'Female', 'Sapecoense', 'Jubiscreide', 3, 3);
 INSERT INTO PERSON(id, age, birth_date, gender , last_name, name, address_id, occupation_id) VALUES (4, 19, TO_DATE('02-25-1997', 'MM-DD-YYYY'), 'Female', 'Famosa', 'Creudimar', 4, 3);
 INSERT INTO PERSON(id, age, birth_date, gender , last_name, name, address_id, occupation_id) VALUES (5, 19, TO_DATE('06-09-1996', 'MM-DD-YYYY'), 'Male', 'Guri', 'Dianho', 5, 3);
+
+INSERT INTO PHONE(id, number, type, person_id) VALUES (1, '75982074248', 'personal', 1);
+INSERT INTO PHONE(id, number, type, person_id) VALUES (2, '75992584632', 'personal', 1);
+INSERT INTO PHONE(id, number, type, person_id) VALUES (3, '23411234', 'home', 1);
+INSERT INTO PHONE(id, number, type, person_id) VALUES (4, '75991266778', 'personal', 2);
+INSERT INTO PHONE(id, number, type, person_id) VALUES (5, '23411234', 'home', 2);
