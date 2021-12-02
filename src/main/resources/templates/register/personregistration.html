@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,36 +10,36 @@
 <div class="container">
     <h5>Registration Page</h5>
 
-    <form>
+    <form th:object="${person}" th:action="save" method="post">
         <div>
             <h6>Personal Data :</h6>
 
             <label>Id :</label>
-            <input type="text" name="id" id="person-id" readonly="readonly" placeholder="Automatically generated">
+            <input type="text" name="id" id="person-id" readonly="readonly" th:field="*{id}" placeholder="Automatically generated">
 
             <label>Name :</label>
-            <input type="text" name="name" id="person-name" placeholder="Type person name">
+            <input type="text" name="name" id="person-name" th:field="*{name}" placeholder="Type person name">
 
             <label>LastName : </label>
-            <input type="text" name="lastName" id="person-lastname" placeholder="Type person last name">
+            <input type="text" name="lastName" id="person-lastname" th:field="*{lastName}" placeholder="Type person last name">
         </div>
         <br>
 
         <div>
             <label>Age : </label>
-            <input type="text" name="age" id="person-age" placeholder="Type person age">
+            <input type="text" name="age" id="person-age" th:field="*{age}" placeholder="Type person age">
 
             <label class="active">Occupation : </label>
-            <select>
-                <option>Dev</option>
-                <option>Tester</option>
-                <option>Manager</option>
+            <select th:field="*{occupation}">
+                <option th:value="dev">Dev</option>
+                <option th:value="tester">Tester</option>
+                <option th:value="Manager">Manager</option>
             </select>
         </div>
 
         <div>
             <label class="active">Gender : </label>
-            <select>
+            <select th:field="*{gender}">
                 <option value="" disabled="disabled" selected="selected">--[Select]--</option>
                 <option value="MALE">Male</option>
                 <option value="FEMALE">Female</option>
@@ -45,7 +47,7 @@
 
             <div>
                 <label for="birthDate" class="active">Birth Date : </label>
-                <input type="date" name="birthDate" id="birthDate" placeholder="Type the birth date">
+                <input type="date" name="birthDate" id="birthDate" th:field="*{birthDate}" placeholder="Type the birth date">
             </div>
         </div>
 
@@ -58,12 +60,12 @@
 
                 <div>
                     <label>Cep : </label>
-                    <input type="text" name="cep" id="cep" placeholder="Type a valid CEP">
+                    <input type="text" name="cep" id="cep" th:field="*{address.cep}" placeholder="Type a valid CEP">
                 </div>
 
                 <div>
                     <label>Street : </label>
-                    <input type="text" name="rua" id="rua" placeholder="Automatically generated">
+                    <input type="text" name="rua" id="rua" th:field="*{address.rua}" placeholder="Automatically generated">
                 </div>
 
             </div>
@@ -72,24 +74,24 @@
 
                 <div>
                     <label>District : </label>
-                    <input type="text" name="bairro" id="bairro" placeholder="Automatically generated">
+                    <input type="text" name="bairro" id="bairro" th:field="*{address.bairro}" placeholder="Automatically generated">
                 </div>
 
                 <div>
                     <label>City : </label>
-                    <input type="text" name="bairro" id="cidade" placeholder="Automatically generated">
+                    <input type="text" name="cidade" id="cidade" th:field="*{address.cidade}" placeholder="Automatically generated">
                 </div>
             </div>
 
             <div>
                 <div>
                     <label>UF : </label>
-                    <input type="text" name="uf" id="uf" placeholder="Automatically generated">
+                    <input type="text" name="uf" id="uf" th:field="*{address.uf}" placeholder="Automatically generated">
                 </div>
 
                 <div>
                     <label>IBGE : </label>
-                    <input type="text" name="ibge" id="ibge" placeholder="Automatically generated">
+                    <input type="text" name="ibge" id="ibge" th:field="*{address.ibge}" placeholder="Automatically generated">
                 </div>
             </div>
 
