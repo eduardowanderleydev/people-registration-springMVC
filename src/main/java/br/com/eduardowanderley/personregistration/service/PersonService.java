@@ -50,4 +50,16 @@ public class PersonService {
     public void deleteById(Long personId) {
         personRepository.deleteById(personId);
     }
+
+    public Page<Person> findPersonByNameAndGenderPage(String genderSearch, String research, Pageable pageable) {
+        return personRepository.findPersonByNameAndGenderPage(genderSearch, research, pageable);
+    }
+
+    public Page<Person> findPersonByNamePage(String research, Pageable pageable) {
+        return personRepository.findPersonByNamePage(research, pageable);
+    }
+
+    public Page<Person> findPersonByGenderPage(String genderSearch, Pageable pageable) {
+        return personRepository.findPersonByGenderPage(genderSearch, pageable);
+    }
 }

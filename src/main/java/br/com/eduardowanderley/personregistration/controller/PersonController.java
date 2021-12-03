@@ -1,12 +1,15 @@
 package br.com.eduardowanderley.personregistration.controller;
 
 import br.com.eduardowanderley.personregistration.controller.dto.person.PersonFormDTO;
+import br.com.eduardowanderley.personregistration.model.Person;
 import br.com.eduardowanderley.personregistration.service.OccupationService;
 import br.com.eduardowanderley.personregistration.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +43,30 @@ public class PersonController {
     public String listPerson(@PageableDefault(size = 5) Pageable pageable, Model model) {
         model.addAttribute("person", new PersonFormDTO());
         model.addAttribute("peoplelist", personService.findByPage(pageable));
+        model.addAttribute("occupations", occupationService.findAll());
+        return "register/personregistration";
+    }
+
+    @PostMapping( "/search")
+    public String search(@Param("research") String research, @Param("genderSearch") String genderSearch,
+                               @PageableDefault( size = 5, sort = {"name"} ) Pageable pageable, Model model ) {
+
+        Page<Person> list = null;
+
+        if (genderSearch != null && !genderSearch.equals("") && research != null && !research.equals("")) {
+            list = personService.findPersonByNameAndGenderPage(genderSearch, research, pageable);
+        } else if (genderSearch == null || genderSearch.equals("") && research != null && !research.equals("")) {
+            list = personService.findPersonByNamePage(research, pageable);
+        } else if (genderSearch != null && !genderSearch.equals("") && research == null || research.equals("")) {
+            list = personService.findPersonByGenderPage(genderSearch, pageable);
+        } else {
+            list = personService.findByPage(pageable);
+        }
+
+        model.addAttribute("peoplelist", list);
+        model.addAttribute("person", new PersonFormDTO());
+        model.addAttribute("research", research);
+        model.addAttribute("genderSearch", genderSearch);
         model.addAttribute("occupations", occupationService.findAll());
         return "register/personregistration";
     }
