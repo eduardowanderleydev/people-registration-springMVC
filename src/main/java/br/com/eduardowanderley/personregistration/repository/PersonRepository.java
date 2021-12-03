@@ -6,10 +6,22 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
+
+    @Query("select p from Person p where p.name like %?1% and p.gender like %?2%")
+    List<Person> findByNameAndGender(String research, String genderSearch);
+
+    @Query("select p from Person p where p.name like %?1%")
+    List<Person> findByName(String research);
+
+    @Query("select p from Person p where p.gender like %?1%")
+    List<Person> findByGender(String genderSearch);
 
     default Page<Person> findPersonByNamePage(String name, Pageable pageable) {
 
@@ -62,5 +74,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
         return people;
     }
+
 
 }

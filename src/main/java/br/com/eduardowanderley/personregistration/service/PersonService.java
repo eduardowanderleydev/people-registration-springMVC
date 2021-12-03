@@ -62,4 +62,16 @@ public class PersonService {
     public Page<Person> findPersonByGenderPage(String genderSearch, Pageable pageable) {
         return personRepository.findPersonByGenderPage(genderSearch, pageable);
     }
+
+    public List<PersonFormDTO> findByNameAndGender(String research, String genderSearch) {
+        return personRepository.findByNameAndGender(research, genderSearch).stream().map(person -> new PersonFormDTO(person)).collect(Collectors.toList());
+    }
+
+    public List<PersonFormDTO> findByName(String research) {
+        return personRepository.findByName(research).stream().map(person -> new PersonFormDTO(person)).collect(Collectors.toList());
+    }
+
+    public List<PersonFormDTO> findByGender(String genderSearch) {
+        return personRepository.findByGender(genderSearch).stream().map(person -> new PersonFormDTO(person)).collect(Collectors.toList());
+    }
 }

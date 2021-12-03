@@ -1,5 +1,6 @@
 package br.com.eduardowanderley.personregistration.controller.dto.person;
 
+import br.com.eduardowanderley.personregistration.controller.dto.phone.PhoneDTO;
 import br.com.eduardowanderley.personregistration.model.Person;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -8,8 +9,11 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 public class PersonFormDTO implements Serializable {
+
+    private Long id;
 
     @NotEmpty(message = "name cannot be empty")
     @NotNull(message = "name cannot be null")
@@ -39,10 +43,13 @@ public class PersonFormDTO implements Serializable {
     private String uf;
     private String ibge;
 
+    private List<PhoneDTO> phones;
+
     public PersonFormDTO() {
     }
 
     public PersonFormDTO(Person person) {
+        this.id = person.getId();
         this.name = person.getName();
         this.lastName = person.getLastName();
         this.age = person.getAge();
@@ -55,6 +62,14 @@ public class PersonFormDTO implements Serializable {
         this.cidade = person.getAddress().getCidade();
         this.uf = person.getAddress().getUf();
         this.ibge = person.getAddress().getIbge();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -151,5 +166,13 @@ public class PersonFormDTO implements Serializable {
 
     public void setIbge(String ibge) {
         this.ibge = ibge;
+    }
+
+    public List<PhoneDTO> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(List<PhoneDTO> phones) {
+        this.phones = phones;
     }
 }

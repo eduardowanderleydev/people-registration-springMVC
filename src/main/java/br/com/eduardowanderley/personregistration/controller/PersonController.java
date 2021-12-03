@@ -1,9 +1,12 @@
 package br.com.eduardowanderley.personregistration.controller;
 
+import br.com.eduardowanderley.personregistration.controller.dto.person.PersonDTO;
 import br.com.eduardowanderley.personregistration.controller.dto.person.PersonFormDTO;
 import br.com.eduardowanderley.personregistration.model.Person;
 import br.com.eduardowanderley.personregistration.service.OccupationService;
 import br.com.eduardowanderley.personregistration.service.PersonService;
+import br.com.eduardowanderley.personregistration.util.ReportUtil;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +20,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +32,13 @@ import java.util.List;
 public class PersonController {
 
     @Autowired
-    PersonService personService;
+    private PersonService personService;
 
     @Autowired
-    OccupationService occupationService;
+    private OccupationService occupationService;
+
+    @Autowired
+    private ReportUtil reportUtil;
 
     @GetMapping("/register")
     public String loadRegisterPage(Model model) {
@@ -105,5 +114,35 @@ public class PersonController {
         personService.deleteById(personId);
         return "redirect:/person/register";
     }
+
+    @GetMapping( "/search")
+    public void downloadPdf(@RequestParam("research") String research,
+                            @RequestParam("genderSearch") String genderSearch, HttpServletRequest request, HttpServletResponse response)
+            throws IOException, JRException {
+
+        List<PersonFormDTO> list = new ArrayList<>();
+
+        if (genderSearch != null && !genderSearch.equals("") && research != null && !research.equals("")) {
+            list = personService.findByNameAndGender(research, genderSearch);
+        } else if (genderSearch == null || genderSearch.equals("") && research != null && !research.equals("")) {
+            list = personService.findByName(research);
+        } else if (genderSearch != null && !genderSearch.equals("") && research == null || research.equals("")) {
+            list = personService.findByGender(genderSearch);
+        } else {
+            list.clear();
+        }
+
+        /* Pdf Generation */
+        byte[] pdf = reportUtil.reportGenerator(list, "Person", request.getServletContext());
+
+        /* Answer size */
+        response.setContentLength(pdf.length);
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition", "attachment;filename=\"relatorio.pdf\" ");
+
+        /* End answer */
+        response.getOutputStream().write(pdf);
+    }
+
 
 }
