@@ -1,6 +1,5 @@
 package br.com.eduardowanderley.personregistration.controller;
 
-import br.com.eduardowanderley.personregistration.controller.dto.person.PersonDTO;
 import br.com.eduardowanderley.personregistration.controller.dto.person.PersonFormDTO;
 import br.com.eduardowanderley.personregistration.model.Person;
 import br.com.eduardowanderley.personregistration.service.OccupationService;
@@ -48,7 +47,7 @@ public class PersonController {
         return "register/personregistration";
     }
 
-    @GetMapping(value = { "/page"})
+    @GetMapping(value = {"/page"})
     public String listPerson(@PageableDefault(size = 5) Pageable pageable, Model model) {
         model.addAttribute("person", new PersonFormDTO());
         model.addAttribute("peoplelist", personService.findByPage(pageable));
@@ -56,9 +55,9 @@ public class PersonController {
         return "register/personregistration";
     }
 
-    @PostMapping( "/search")
+    @PostMapping("/search")
     public String search(@Param("research") String research, @Param("genderSearch") String genderSearch,
-                               @PageableDefault( size = 5, sort = {"name"} ) Pageable pageable, Model model ) {
+                         @PageableDefault(size = 5, sort = {"name"}) Pageable pageable, Model model) {
 
         Page<Person> list = null;
 
@@ -115,7 +114,7 @@ public class PersonController {
         return "redirect:/person/register";
     }
 
-    @GetMapping( "/search")
+    @GetMapping("/search")
     public void downloadPdf(@RequestParam("research") String research,
                             @RequestParam("genderSearch") String genderSearch, HttpServletRequest request, HttpServletResponse response)
             throws IOException, JRException {

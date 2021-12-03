@@ -2,7 +2,9 @@ package br.com.eduardowanderley.personregistration.controller.dto.phone;
 
 import br.com.eduardowanderley.personregistration.model.Phone;
 
-public class PhoneDTO {
+import java.io.Serializable;
+
+public class PhoneDTO implements Serializable {
 
     private Long id;
     private String number;
