@@ -138,8 +138,8 @@
                 <span th:text="${p.name}"></span>
             </a> </td>
             <td th:text="${p.lastName}"></td>
-            <td><a>Edit</a></td>
-            <td><a>Delete</a></td>
+            <td><a th:href="@{/person/edit/{personid}(personid=${p.id})}">Edit</a></td>
+            <td><a th:href="@{/person/delete/{personid}(personid=${p.id})}">Delete</a> </td>
         </tr>
     </table>
 </div>

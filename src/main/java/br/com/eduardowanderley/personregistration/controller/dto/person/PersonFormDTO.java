@@ -1,5 +1,6 @@
 package br.com.eduardowanderley.personregistration.controller.dto.person;
 
+import br.com.eduardowanderley.personregistration.model.Person;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -24,6 +25,21 @@ public class PersonFormDTO implements Serializable {
     private String ibge;
 
     public PersonFormDTO() {
+    }
+
+    public PersonFormDTO(Person person) {
+        this.name = person.getName();
+        this.lastName = person.getLastName();
+        this.age = person.getAge();
+        this.gender = person.getGender();
+        this.birthDate = person.getBirthDate();
+        this.occupation = person.getPersonOccupation().getName();
+        this.cep = person.getAddress().getCep();
+        this.rua = person.getAddress().getRua();
+        this.bairro = person.getAddress().getBairro();
+        this.cidade = person.getAddress().getCidade();
+        this.uf = person.getAddress().getUf();
+        this.ibge = person.getAddress().getIbge();
     }
 
     public String getName() {

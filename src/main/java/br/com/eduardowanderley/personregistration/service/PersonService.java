@@ -34,4 +34,12 @@ public class PersonService {
         return personRepository.findById(personid).map(PersonDTO::new).orElseThrow(() -> new IllegalArgumentException());
     }
 
+    public PersonFormDTO findPersonToEditById(Long personid) {
+        // TODO change IllegalException for some personalized exception
+        return personRepository.findById(personid).map(person -> new PersonFormDTO(person)).orElseThrow(() -> new IllegalArgumentException());
+    }
+
+    public void deleteById(Long personId) {
+        personRepository.deleteById(personId);
+    }
 }
