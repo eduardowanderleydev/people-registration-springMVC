@@ -10,6 +10,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
+    <style type="text/css">
+        h5 {
+            text-align: center;
+        }
+        #pagination-link {
+            text-align: center;
+        }
+    </style>
+
 </head>
 <body>
 <div class="container">
@@ -209,9 +218,11 @@
         </tr>
     </table>
 
-    <div class="row" style="margin-top: 30px;" id="pagination-link">
-			<span th:if="${peoplelist.hasPrevious()}"> <a
-                    th:href="@{/person/page(page = ${peoplelist.number - 1}, size = ${peoplelist.size})}">Previous</a>
+    <div class="pagination" style="margin-top: 30px;" id="pagination-link">
+			<span th:if="${peoplelist.hasPrevious()}">
+                <a
+                    th:href="@{/person/page(page = ${peoplelist.number - 1}, size = ${peoplelist.size})}">Previous
+                </a>
 			</span>
         <th:block
                 th:each="i : ${#numbers.sequence(0, peoplelist.totalPages - 1)}">
