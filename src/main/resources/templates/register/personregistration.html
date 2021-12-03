@@ -13,6 +13,7 @@
 </head>
 <body>
 <div class="container">
+    <div th:include="/navbar.html"></div>
     <h5>Registration Page</h5>
 
     <div th:each="msg : ${msg}">
@@ -148,6 +149,7 @@
             <td><a th:href="@{/person/delete/{personid}(personid=${p.id})}">Delete</a> </td>
         </tr>
     </table>
+    <div th:include="/footer.html"></div>
 </div>
 
 <script>

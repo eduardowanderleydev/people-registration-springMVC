@@ -10,7 +10,7 @@
 
 <body>
 <div class="container">
-
+  <div th:include="/navbar.html"></div>
   <h5>Phones</h5>
   <div class="row">
     <form th:action="@{save/{idperson} (idperson = ${person.id}) }" method="post" class="col s12">
@@ -47,7 +47,7 @@
       <td> <a th:href = "@{/phones/delete/{idphone} (idphone = ${p.id}) }" >Delete</a> </td>
     </tr>
   </table>
-
+  <div th:include="/footer.html"></div>
 </div>
 </body>
 </html>
