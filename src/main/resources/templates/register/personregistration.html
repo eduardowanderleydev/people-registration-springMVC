@@ -149,6 +149,22 @@
             <td><a th:href="@{/person/delete/{personid}(personid=${p.id})}">Delete</a> </td>
         </tr>
     </table>
+
+    <div class="row" style="margin-top: 30px;" id="pagination-link">
+			<span th:if="${peoplelist.hasPrevious()}"> <a
+                    th:href="@{/person/page(page = ${peoplelist.number - 1}, size = ${peoplelist.size})}">Previous</a>
+			</span>
+        <th:block
+                th:each="i : ${#numbers.sequence(0, peoplelist.totalPages - 1)}">
+            <a
+                    th:href="@{/person/page(page=${i}, size = ${peoplelist.size})}">
+                [[ ${i} + 1 ]] </a>
+        </th:block>
+        <span th:if="${peoplelist.hasNext()}"> <a
+                th:href="@{/person/page(page = ${peoplelist.number+1}, size = ${peoplelist.size})}">Next</a>
+			</span>
+    </div>
+
     <div th:include="/footer.html"></div>
 </div>
 

@@ -6,6 +6,10 @@ import br.com.eduardowanderley.personregistration.mapper.PersonMapper;
 import br.com.eduardowanderley.personregistration.model.Person;
 import br.com.eduardowanderley.personregistration.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +27,10 @@ public class PersonService {
     public void save(PersonFormDTO personDTO) {
         Person person = mapper.changePersonFormDtoToPerson(personDTO);
         personRepository.save(person);
+    }
+
+    public Page<Person> findByPage(Pageable pageable) {
+        return personRepository.findAll(pageable);
     }
 
     public List<PersonDTO> findAll() {
