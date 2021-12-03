@@ -22,7 +22,7 @@
 
     <br>
 
-    <form th:object="${person}" th:action="save" method="post" class="col s12">
+    <form th:object="${person}" th:action="save" method="post" class="col s12" enctype="multipart/form-data">
 
         <div class="section">
 
@@ -69,6 +69,23 @@
                            placeholder="Type the birth date">
                 </div>
             </div>
+
+            <div class="row">
+
+                <div class="input-field col s6">
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>Curriculum</span> <input type="file" name="file" id="file"
+                                                           class="file-field input-field">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div><!--END DIV SECTION -->
 
         <div class="divider"></div>
@@ -149,7 +166,9 @@
                 </div>
 
                 <div class="input-field col s12">
-                    <button type="submit" class="btn waves-effect waves-light" onclick="document.getElementById('formsearch').method = 'get' ">PDF</button>
+                    <button type="submit" class="btn waves-effect waves-light"
+                            onclick="document.getElementById('formsearch').method = 'get' ">PDF
+                    </button>
                     <button type="submit" class="btn waves-effect waves-light">Search</button>
                     <a href="/person/register" class="btn waves-effect waves-light">List Persons</a>
                 </div>
@@ -165,6 +184,7 @@
             <th>Id</th>
             <th>Name</th>
             <th>LastName</th>
+            <th>Curriculum</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
@@ -176,6 +196,14 @@
                 <span th:text="${p.name}"></span>
             </a></td>
             <td th:text="${p.lastName}"></td>
+            <td><a th:if="${p.curriculum} != null"
+                   th:href="@{/person/downloadcv/{personid}(personid=${p.id})}">
+                <img width="30px" src="https://img.icons8.com/metro/452/download.png" alt="download">
+            </a>
+                <a th:if="${p.curriculum} == null ">
+                    <img width="30px" src="https://image.flaticon.com/icons/png/512/32/32345.png" alt="empty">
+                </a>
+            </td>
             <td><a th:href="@{/person/edit/{personid}(personid=${p.id})}">Edit</a></td>
             <td><a th:href="@{/person/delete/{personid}(personid=${p.id})}">Delete</a></td>
         </tr>

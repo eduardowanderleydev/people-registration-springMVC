@@ -1,6 +1,7 @@
 package br.com.eduardowanderley.personregistration.controller.dto.person;
 
 import br.com.eduardowanderley.personregistration.controller.dto.phone.PhoneDTO;
+import br.com.eduardowanderley.personregistration.model.Occupation;
 import br.com.eduardowanderley.personregistration.model.Person;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -43,6 +44,11 @@ public class PersonFormDTO implements Serializable {
     private String uf;
     private String ibge;
 
+    private Occupation personOccupation;
+    private String fileCurriculumName;
+    private String fileCurriculumType;
+    private byte[] curriculum;
+
     private List<PhoneDTO> phones;
 
     public PersonFormDTO() {
@@ -62,6 +68,9 @@ public class PersonFormDTO implements Serializable {
         this.cidade = person.getAddress().getCidade();
         this.uf = person.getAddress().getUf();
         this.ibge = person.getAddress().getIbge();
+        this.fileCurriculumName = person.getFileCurriculumName();
+        this.fileCurriculumType = person.getFileCurriculumType();
+        this.curriculum = person.getCurriculum();
     }
 
     public Long getId() {
@@ -174,5 +183,37 @@ public class PersonFormDTO implements Serializable {
 
     public void setPhones(List<PhoneDTO> phones) {
         this.phones = phones;
+    }
+
+    public Occupation getPersonOccupation() {
+        return personOccupation;
+    }
+
+    public void setPersonOccupation(Occupation personOccupation) {
+        this.personOccupation = personOccupation;
+    }
+
+    public String getFileCurriculumName() {
+        return fileCurriculumName;
+    }
+
+    public void setFileCurriculumName(String fileCurriculumName) {
+        this.fileCurriculumName = fileCurriculumName;
+    }
+
+    public String getFileCurriculumType() {
+        return fileCurriculumType;
+    }
+
+    public void setFileCurriculumType(String fileCurriculumType) {
+        this.fileCurriculumType = fileCurriculumType;
+    }
+
+    public byte[] getCurriculum() {
+        return curriculum;
+    }
+
+    public void setCurriculum(byte[] curriculum) {
+        this.curriculum = curriculum;
     }
 }

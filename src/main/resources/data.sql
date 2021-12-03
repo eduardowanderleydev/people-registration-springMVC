@@ -1,4 +1,4 @@
-INSERT INTO ADDRESS(id ,bairro, cep, cidade, ibge, rua, uf) VALUES (1, 'Nova Santo Amaro', '44200000', 'Santo Amaro', '', 'Rua K', 'BA');
+INSERT INTO ADDRESS(id ,bairro, cep, cidade, ibge, rua, uf) VALUES (1,'Nova Santo Amaro', '44200000', 'Santo Amaro', '', 'Rua K', 'BA');
 INSERT INTO ADDRESS(id ,bairro, cep, cidade, ibge, rua, uf) VALUES (2, 'Verde Vale', '44200000', 'Santo Amaro', '', 'Irma Dulce', 'BA');
 INSERT INTO ADDRESS(id ,bairro, cep, cidade, ibge, rua, uf) VALUES (3, 'Bairro X', '44200000', 'Santo Amaro', '', 'Rua X', 'BA');
 INSERT INTO ADDRESS(id ,bairro, cep, cidade, ibge, rua, uf) VALUES (4, 'Bairro Y', '44200000', 'Santo Amaro', '', 'Rua Y', 'BA');

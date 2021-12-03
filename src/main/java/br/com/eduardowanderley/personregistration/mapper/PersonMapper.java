@@ -25,6 +25,9 @@ public class PersonMapper {
         person.setName(dto.getName());
         person.setLastName(dto.getLastName());
         person.setPersonOccupation(returnOccupationByDto(dto));
+        person.setCurriculum(dto.getCurriculum());
+        person.setFileCurriculumName(dto.getFileCurriculumName());
+        person.setFileCurriculumType(dto.getFileCurriculumType());
         return person;
     }
 

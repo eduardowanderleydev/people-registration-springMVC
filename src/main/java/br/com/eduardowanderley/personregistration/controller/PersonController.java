@@ -1,5 +1,6 @@
 package br.com.eduardowanderley.personregistration.controller;
 
+import br.com.eduardowanderley.personregistration.controller.dto.person.PersonDTO;
 import br.com.eduardowanderley.personregistration.controller.dto.person.PersonFormDTO;
 import br.com.eduardowanderley.personregistration.model.Person;
 import br.com.eduardowanderley.personregistration.service.OccupationService;
@@ -13,15 +14,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,8 +83,8 @@ public class PersonController {
         return "register/personregistration";
     }
 
-    @PostMapping("/save")
-    public String save(@Valid PersonFormDTO personDTO, BindingResult br, Model model) {
+    @PostMapping(value = "/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public String save(@Valid PersonFormDTO personDTO, BindingResult br, Model model, final MultipartFile file) throws IOException {
 
         if (br.hasErrors()) {
             model.addAttribute("peoplelist", personService.findByPage(PageRequest.of(0, 5, Sort.by("name"))));
@@ -94,6 +98,20 @@ public class PersonController {
             model.addAttribute("msg", msg);
             model.addAttribute("occupations", occupationService.findAll());
             return "register/personregistration";
+        }
+
+        // if have some file information, set information
+        if (file.getSize() > 0) {
+            personDTO.setCurriculum(file.getBytes());
+            personDTO.setFileCurriculumName(file.getOriginalFilename());
+            personDTO.setFileCurriculumType(file.getContentType());
+        } else { // if file dont have any content
+            if (personDTO.getId() != null && personDTO.getId() > 0) { // and the person already exists, set information about already registered curriculum
+                PersonDTO tempPerson = personService.findById(personDTO.getId());
+                personDTO.setCurriculum(tempPerson.getCurriculum());
+                personDTO.setFileCurriculumName(tempPerson.getFileCurriculumName());
+                personDTO.setFileCurriculumType(tempPerson.getFileCurriculumType());
+            }
         }
 
         personService.save(personDTO);
@@ -143,5 +161,18 @@ public class PersonController {
         response.getOutputStream().write(pdf);
     }
 
+    @GetMapping("/downloadcv/{idperson}")
+    public void curriculumDownload(@PathVariable("idperson") Long idperson, HttpServletResponse response) throws IOException {
+
+        PersonDTO person = personService.findById(idperson);
+
+        if (person != null) {
+            response.setContentLength(person.getCurriculum().length);
+            response.setContentType(person.getFileCurriculumType());
+            response.setHeader("Content-Disposition", "attachment; filename = \"" + person.getFileCurriculumName() + " \" " );
+
+            response.getOutputStream().write(person.getCurriculum());
+        }
+    }
 
 }

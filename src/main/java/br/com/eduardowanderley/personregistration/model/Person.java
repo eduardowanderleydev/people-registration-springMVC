@@ -34,6 +34,17 @@ public class Person {
     @ManyToOne
     private Occupation personOccupation;
 
+    private String fileCurriculumName;
+
+    private String fileCurriculumType;
+
+    @Lob
+    private byte [] curriculum;
+
+    public void setCurriculum(byte[] curriculum) {
+        this.curriculum = curriculum;
+    }
+
     public Person() {
     }
 
@@ -107,6 +118,26 @@ public class Person {
 
     public void setPersonOccupation(Occupation occupation) {
         this.personOccupation = occupation;
+    }
+
+    public String getFileCurriculumName() {
+        return fileCurriculumName;
+    }
+
+    public void setFileCurriculumName(String fileCurriculumName) {
+        this.fileCurriculumName = fileCurriculumName;
+    }
+
+    public String getFileCurriculumType() {
+        return fileCurriculumType;
+    }
+
+    public void setFileCurriculumType(String fileCurriculumType) {
+        this.fileCurriculumType = fileCurriculumType;
+    }
+
+    public byte[] getCurriculum() {
+        return curriculum;
     }
 
     @Override
