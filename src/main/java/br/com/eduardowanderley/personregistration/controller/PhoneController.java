@@ -1,6 +1,7 @@
 package br.com.eduardowanderley.personregistration.controller;
 
 import br.com.eduardowanderley.personregistration.controller.dto.phone.PhoneDTO;
+import br.com.eduardowanderley.personregistration.model.Person;
 import br.com.eduardowanderley.personregistration.service.PersonService;
 import br.com.eduardowanderley.personregistration.service.PhoneService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,13 @@ public class PhoneController {
         phoneService.save(phone, personid);
 
         return "redirect:/phones/" + personid;
+    }
+
+    @GetMapping("/delete/{idphone}")
+    public String delete(@PathVariable("idphone") Long id) {
+        long personId = phoneService.findPersonIdByPhone(id);
+        phoneService.deleteById(id);
+        return "redirect:/phones/" + personId;
     }
 
 }

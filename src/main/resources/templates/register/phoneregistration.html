@@ -44,7 +44,7 @@
     <tr th:each="p : ${phones}">
       <td th:text="${p.number}"></td>
       <td th:text="${p.type}"></td>
-      <td> <a>Delete</a> </td>
+      <td> <a th:href = "@{/phones/delete/{idphone} (idphone = ${p.id}) }" >Delete</a> </td>
     </tr>
   </table>
 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,4 +42,16 @@ public class PhoneService {
         phoneRepository.save(phone);
     }
 
+    public PhoneDTO findById(Long id) {
+        return phoneRepository.findById(id).map(phone -> new PhoneDTO(phone)).orElseThrow(() -> new RuntimeException());
+    }
+
+    public long findPersonIdByPhone(Long id) {
+        Phone phone = phoneRepository.findById(id).orElseThrow(() -> new RuntimeException());
+        return phone.getId();
+    }
+
+    public void deleteById(Long id) {
+        phoneRepository.deleteById(id);
+    }
 }
