@@ -15,6 +15,12 @@
 <div class="container">
     <h5>Registration Page</h5>
 
+    <div th:each="msg : ${msg}">
+        <span th:text="${msg}"></span>
+    </div>
+
+    <br>
+
     <form th:object="${person}" th:action="save" method="post" class="col s12">
 
         <div class="section">

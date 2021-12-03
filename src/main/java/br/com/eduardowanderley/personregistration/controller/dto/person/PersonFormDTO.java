@@ -3,21 +3,36 @@ package br.com.eduardowanderley.personregistration.controller.dto.person;
 import br.com.eduardowanderley.personregistration.model.Person;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
 public class PersonFormDTO implements Serializable {
 
+    @NotEmpty(message = "name cannot be empty")
+    @NotNull(message = "name cannot be null")
     private String name;
+
+    @NotEmpty(message = "Last name cannot be empty")
+    @NotNull(message = "Last name cannot be null")
     private String lastName;
+
+    @Min(value = 18, message = "Age must be older than 18 years")
     private Integer age;
+
     private String gender;
+
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private LocalDate birthDate;
 
+    @NotNull(message = "Occupation cannot be null")
     private String occupation;
 
+    @NotEmpty(message = "CEP cannot be empty")
     private String cep;
+
     private String rua;
     private String bairro;
     private String cidade;
