@@ -24,3 +24,12 @@ INSERT INTO PHONE(id, number, type, person_id) VALUES (2, '4984132358', 'persona
 INSERT INTO PHONE(id, number, type, person_id) VALUES (3, '498413513217', 'home', 1);
 INSERT INTO PHONE(id, number, type, person_id) VALUES (4, '598413515', 'personal', 2);
 INSERT INTO PHONE(id, number, type, person_id) VALUES (5, '1597894123', 'home', 2);
+
+INSERT INTO ROLE (role_name) VALUES ('ADMIN');
+INSERT INTO ROLE (role_name) VALUES ('USER');
+
+INSERT INTO USER_SECURITY (id, username, password) VALUES (1, 'admin', '$2a$10$HrJkJc.RqiS/MoTq0MLfQe3A3H.2cQgT/7qbv8AjZlTi2FhGUvrvO');
+INSERT INTO USER_SECURITY (id, username, password) VALUES (2, 'user', '$2a$10$KQU6ryviOv0v6rRATM5iqecPbWbIo9g3rjJ05J553TdO0SSxmgCWi');
+
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (1, 1);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (2, 2);

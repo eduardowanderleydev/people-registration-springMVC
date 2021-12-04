@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <style type="text/css">
+        .container {
+            width: 400px;
+            height: 150px;
+            left: 50%;
+            margin: -130px 0 0 -210px;
+            padding: 10px;
+            position: absolute;
+            top: 50%;
+        }
+    </style>
+
+</head>
+<body>
+
+
+<div class="container">
+
+    <div class="content">
+        <h5>System Access</h5>
+
+        <form th:action="@{/login}" method="post">
+
+            <div>
+                <label>Login :</label>
+                <input type="text" name="username">
+            </div>
+
+            <div>
+                <label>Password :</label>
+                <input type="password" name="password">
+            </div>
+
+            <button class="btn waves-effect waves-light">Login</button>
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>
