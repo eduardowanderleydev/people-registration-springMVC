@@ -1,7 +1,6 @@
 package br.com.eduardowanderley.personregistration.controller.dto.person;
 
 import br.com.eduardowanderley.personregistration.controller.dto.phone.PhoneDTO;
-import br.com.eduardowanderley.personregistration.model.Occupation;
 import br.com.eduardowanderley.personregistration.model.Person;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -33,7 +32,7 @@ public class PersonFormDTO implements Serializable {
     private LocalDate birthDate;
 
     @NotNull(message = "Occupation cannot be null")
-    private String occupation;
+    private String personOccupation;
 
     @NotEmpty(message = "CEP cannot be empty")
     private String cep;
@@ -44,7 +43,6 @@ public class PersonFormDTO implements Serializable {
     private String uf;
     private String ibge;
 
-    private Occupation personOccupation;
     private String fileCurriculumName;
     private String fileCurriculumType;
     private byte[] curriculum;
@@ -61,7 +59,7 @@ public class PersonFormDTO implements Serializable {
         this.age = person.getAge();
         this.gender = person.getGender();
         this.birthDate = person.getBirthDate();
-        this.occupation = person.getPersonOccupation().getName();
+        this.personOccupation = person.getPersonOccupation().getName();
         this.cep = person.getAddress().getCep();
         this.rua = person.getAddress().getRua();
         this.bairro = person.getAddress().getBairro();
@@ -121,12 +119,12 @@ public class PersonFormDTO implements Serializable {
         this.birthDate = birthDate;
     }
 
-    public String getOccupation() {
-        return occupation;
+    public String getPersonOccupation() {
+        return personOccupation;
     }
 
-    public void setOccupation(String occupation) {
-        this.occupation = occupation;
+    public void setPersonOccupation(String personOccupation) {
+        this.personOccupation = personOccupation;
     }
 
     public String getCep() {
@@ -183,14 +181,6 @@ public class PersonFormDTO implements Serializable {
 
     public void setPhones(List<PhoneDTO> phones) {
         this.phones = phones;
-    }
-
-    public Occupation getPersonOccupation() {
-        return personOccupation;
-    }
-
-    public void setPersonOccupation(Occupation personOccupation) {
-        this.personOccupation = personOccupation;
     }
 
     public String getFileCurriculumName() {

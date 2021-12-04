@@ -32,7 +32,7 @@ public class PersonMapper {
     }
 
     private Occupation returnOccupationByDto(PersonFormDTO dto) {
-        Long occupationId = Long.parseLong(dto.getOccupation());
+        Long occupationId = Long.parseLong(dto.getPersonOccupation());
         OccupationDTO occupationDTO = occupationService.findById(occupationId);
         Occupation occupation = new Occupation();
         occupation.setId(occupationDTO.getId());
