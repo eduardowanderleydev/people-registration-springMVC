@@ -28,35 +28,30 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
         Person person = new Person();
         person.setName(name);
-
-        /*
-         * Configurando a pesquisa para consultar por por nome no banco de dados (
-         * funciona como o like do sql)
-         */
-        ExampleMatcher exampleMatcher = ExampleMatcher.matchingAny().withMatcher("name",
-                ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
-
-        /* Une o objeto com o valor e a configuração pra consultar */
+        ExampleMatcher exampleMatcher = ExampleMatcher
+                .matchingAny()
+                .withMatcher("name", ExampleMatcher
+                        .GenericPropertyMatchers
+                        .contains()
+                        .ignoreCase());
         Example<Person> example = Example.of(person, exampleMatcher);
 
-        Page<Person> people = findAll(example, pageable);
-
-        return people;
+        return findAll(example, pageable);
     }
 
     default Page<Person> findPersonByGenderPage(String gender, Pageable pageable) {
 
         Person person = new Person();
         person.setGender(gender);
-
-        ExampleMatcher exampleMatcher = ExampleMatcher.matchingAll().withMatcher("gender",
-                ExampleMatcher.GenericPropertyMatchers.exact().ignoreCase());
-
+        ExampleMatcher exampleMatcher = ExampleMatcher
+                .matchingAll()
+                .withMatcher("gender", ExampleMatcher
+                        .GenericPropertyMatchers
+                        .exact()
+                        .ignoreCase());
         Example<Person> example = Example.of(person, exampleMatcher);
 
-        Page<Person> people = findAll(example, pageable);
-
-        return people;
+        return findAll(example, pageable);
     }
 
     default Page<Person> findPersonByNameAndGenderPage(String gender, String name, Pageable pageable) {
@@ -65,16 +60,19 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
         person.setName(name);
         person.setGender(gender);
 
-        ExampleMatcher exampleMatcher = ExampleMatcher.matching()
-                .withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
-                .withMatcher("gender", ExampleMatcher.GenericPropertyMatchers.exact().ignoreCase());
+        ExampleMatcher exampleMatcher = ExampleMatcher
+                .matching()
+                .withMatcher("name", ExampleMatcher
+                        .GenericPropertyMatchers
+                        .contains()
+                        .ignoreCase())
+                .withMatcher("gender", ExampleMatcher
+                        .GenericPropertyMatchers
+                        .exact()
+                        .ignoreCase());
 
         Example<Person> example = Example.of(person, exampleMatcher);
 
-        Page<Person> people = findAll(example, pageable);
-
-        return people;
+        return findAll(example, pageable);
     }
-
-
 }
