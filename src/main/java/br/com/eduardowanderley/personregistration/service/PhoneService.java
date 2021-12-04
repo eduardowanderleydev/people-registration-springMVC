@@ -6,7 +6,12 @@ import br.com.eduardowanderley.personregistration.model.Person;
 import br.com.eduardowanderley.personregistration.model.Phone;
 import br.com.eduardowanderley.personregistration.repository.PersonRepository;
 import br.com.eduardowanderley.personregistration.repository.PhoneRepository;
+import br.com.eduardowanderley.personregistration.service.exceptions.DatabaseException;
+import br.com.eduardowanderley.personregistration.service.exceptions.PersonNotFoundException;
+import br.com.eduardowanderley.personregistration.service.exceptions.PhoneNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,28 +34,34 @@ public class PhoneService {
     }
 
     public List<PhoneDTO> findByPerson(Long personid) {
-        // TODO change IllegalException for some personalized exception
         return phoneRepository.findPhonesByPerson(personid).stream().map(PhoneDTO::new).collect(Collectors.toList());
     }
 
     public void save(PhoneDTO phoneDTO, Long personId) {
         Phone phone = mapper.changePhoneDtoToPhone(phoneDTO);
-        Person person = personRepository.findById(personId).orElseThrow(RuntimeException::new);
+        Person person = personRepository.findById(personId).orElseThrow(() -> new PersonNotFoundException("Person with id " + personId + "cannot be found"));
         phone.setPerson(person);
 
         phoneRepository.save(phone);
     }
 
     public PhoneDTO findById(Long id) {
-        return phoneRepository.findById(id).map(PhoneDTO::new).orElseThrow(RuntimeException::new);
+        return phoneRepository.findById(id).map(PhoneDTO::new).orElseThrow(() -> new PhoneNotFoundException("Phone with id " + id + "cannot be found"));
     }
 
     public long findPersonIdByPhone(Long id) {
-        Phone phone = phoneRepository.findById(id).orElseThrow(RuntimeException::new);
-        return phone.getId();
+        Phone phone = phoneRepository.findById(id).orElseThrow(() -> new PhoneNotFoundException("Phone with id " + id + "cannot be found"));
+        return phone.getPerson().getId();
     }
 
     public void deleteById(Long id) {
-        phoneRepository.deleteById(id);
+        try {
+            phoneRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new PhoneNotFoundException("Phone with id " + id + "cannot be found");
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Database violation");
+        }
+
     }
 }

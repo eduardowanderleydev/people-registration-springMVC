@@ -5,7 +5,11 @@ import br.com.eduardowanderley.personregistration.controller.dto.person.PersonFo
 import br.com.eduardowanderley.personregistration.mapper.PersonMapper;
 import br.com.eduardowanderley.personregistration.model.Person;
 import br.com.eduardowanderley.personregistration.repository.PersonRepository;
+import br.com.eduardowanderley.personregistration.service.exceptions.DatabaseException;
+import br.com.eduardowanderley.personregistration.service.exceptions.PersonNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,11 +26,6 @@ public class PersonService {
     @Autowired
     private PersonMapper mapper;
 
-    public void save(PersonFormDTO personDTO) {
-        Person person = mapper.changePersonFormDtoToPerson(personDTO);
-        personRepository.save(person);
-    }
-
     public Page<Person> findByPage(Pageable pageable) {
         return personRepository.findAll(pageable);
     }
@@ -40,17 +39,11 @@ public class PersonService {
     }
 
     public PersonDTO findById(Long personid) {
-        // TODO change IllegalException for some personalized exception
-        return personRepository.findById(personid).map(PersonDTO::new).orElseThrow(IllegalArgumentException::new);
+        return personRepository.findById(personid).map(PersonDTO::new).orElseThrow(() -> new PersonNotFoundException("Person with id " + personid + "cannot be found"));
     }
 
     public PersonFormDTO findPersonToEditById(Long personid) {
-        // TODO change IllegalException for some personalized exception
-        return personRepository.findById(personid).map(PersonFormDTO::new).orElseThrow(IllegalArgumentException::new);
-    }
-
-    public void deleteById(Long personId) {
-        personRepository.deleteById(personId);
+        return personRepository.findById(personid).map(PersonFormDTO::new).orElseThrow(() -> new PersonNotFoundException("Person with id " + personid + "cannot be found"));
     }
 
     public Page<Person> findPersonByNameAndGenderPage(String genderSearch, String research, Pageable pageable) {
@@ -75,5 +68,20 @@ public class PersonService {
 
     public List<PersonFormDTO> findByGender(String genderSearch) {
         return personRepository.findByGender(genderSearch).stream().map(PersonFormDTO::new).collect(Collectors.toList());
+    }
+
+    public void save(PersonFormDTO personDTO) {
+        Person person = mapper.changePersonFormDtoToPerson(personDTO);
+        personRepository.save(person);
+    }
+
+    public void deleteById(Long personId) {
+        try {
+            personRepository.deleteById(personId);
+        } catch (EmptyResultDataAccessException e) {
+            throw new PersonNotFoundException("Person with id " + personId + "cannot be found");
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Database violation");
+        }
     }
 }

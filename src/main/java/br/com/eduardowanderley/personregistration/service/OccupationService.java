@@ -1,6 +1,7 @@
 package br.com.eduardowanderley.personregistration.service;
 
 import br.com.eduardowanderley.personregistration.controller.dto.occupation.OccupationDTO;
+import br.com.eduardowanderley.personregistration.service.exceptions.OccupationNotFoundException;
 import br.com.eduardowanderley.personregistration.repository.OccupationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,6 @@ public class OccupationService {
     }
 
     public OccupationDTO findById(Long id) {
-        return occupationRepository.findById(id).map(OccupationDTO::new).orElseThrow(IllegalArgumentException::new);
+        return occupationRepository.findById(id).map(OccupationDTO::new).orElseThrow(() -> new OccupationNotFoundException("Occupation with id " + id + "cannot be found"));
     }
 }
