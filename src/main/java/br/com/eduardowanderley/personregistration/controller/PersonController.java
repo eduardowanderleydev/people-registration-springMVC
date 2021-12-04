@@ -68,7 +68,7 @@ public class PersonController {
             list = personService.findPersonByNameAndGenderPage(genderSearch, research, pageable);
         } else if (genderSearch == null || genderSearch.equals("") && research != null && !research.equals("")) {
             list = personService.findPersonByNamePage(research, pageable);
-        } else if (genderSearch != null && !genderSearch.equals("") && research == null || research.equals("")) {
+        } else if (genderSearch != null && !genderSearch.equals("") && research == null && research.equals("")) {
             list = personService.findPersonByGenderPage(genderSearch, pageable);
         } else {
             list = personService.findByPage(pageable);
@@ -136,16 +136,16 @@ public class PersonController {
                             @RequestParam("genderSearch") String genderSearch, HttpServletRequest request, HttpServletResponse response)
             throws IOException, JRException {
 
-        List<PersonFormDTO> list = new ArrayList<>();
+        List<PersonFormDTO> list;
 
         if (genderSearch != null && !genderSearch.equals("") && research != null && !research.equals("")) {
             list = personService.findByNameAndGender(research, genderSearch);
         } else if (genderSearch == null || genderSearch.equals("") && research != null && !research.equals("")) {
             list = personService.findByName(research);
-        } else if (genderSearch != null && !genderSearch.equals("") && research == null || research.equals("")) {
+        } else if (genderSearch != null && !genderSearch.equals("") && research == null && research.equals("")) {
             list = personService.findByGender(genderSearch);
         } else {
-            list.clear();
+            list = personService.findAllFormDto();
         }
 
         /* Pdf Generation */

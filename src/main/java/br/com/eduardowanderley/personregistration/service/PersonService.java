@@ -35,6 +35,10 @@ public class PersonService {
         return personRepository.findAll().stream().map(person -> new PersonDTO(person)).collect(Collectors.toList());
     }
 
+    public List<PersonFormDTO> findAllFormDto() {
+        return personRepository.findAll().stream().map(person -> new PersonFormDTO(person)).collect(Collectors.toList());
+    }
+
     public PersonDTO findById(Long personid) {
         // TODO change IllegalException for some personalized exception
         return personRepository.findById(personid).map(PersonDTO::new).orElseThrow(() -> new IllegalArgumentException());
