@@ -33,6 +33,11 @@ import java.util.List;
 @RequestMapping("/person")
 public class PersonController {
 
+    private static final String PERSON_ATTRIBUTE_NAME = "person";
+    private static final String PEOPLE_LIST_ATTRIBUTE_NAME = "peoplelist";
+    private static final String OCCUPATIONS_ATTRIBUTE_NAME = "occupations";
+    private static final String PERSON_REGISTRATION_PAGE = "register/personregistration";
+
     @Autowired
     private PersonService personService;
 
@@ -44,18 +49,18 @@ public class PersonController {
 
     @GetMapping("/register")
     public String loadRegisterPage(Model model) {
-        model.addAttribute("person", new PersonFormDTO());
-        model.addAttribute("peoplelist", personService.findByPage(PageRequest.of(0, 5, Sort.by("name"))));
-        model.addAttribute("occupations", occupationService.findAll());
-        return "register/personregistration";
+        model.addAttribute(PERSON_ATTRIBUTE_NAME, new PersonFormDTO());
+        model.addAttribute(PEOPLE_LIST_ATTRIBUTE_NAME, personService.findByPage(PageRequest.of(0, 5, Sort.by("name"))));
+        model.addAttribute(OCCUPATIONS_ATTRIBUTE_NAME, occupationService.findAll());
+        return PERSON_REGISTRATION_PAGE;
     }
 
     @GetMapping(value = {"/page"})
     public String listPerson(@PageableDefault(size = 5) Pageable pageable, Model model) {
-        model.addAttribute("person", new PersonFormDTO());
-        model.addAttribute("peoplelist", personService.findByPage(pageable));
-        model.addAttribute("occupations", occupationService.findAll());
-        return "register/personregistration";
+        model.addAttribute(PERSON_ATTRIBUTE_NAME, new PersonFormDTO());
+        model.addAttribute(PEOPLE_LIST_ATTRIBUTE_NAME, personService.findByPage(pageable));
+        model.addAttribute(OCCUPATIONS_ATTRIBUTE_NAME, occupationService.findAll());
+        return PERSON_REGISTRATION_PAGE;
     }
 
     @PostMapping("/search")
@@ -64,30 +69,30 @@ public class PersonController {
 
         Page<Person> list = null;
 
-        if (genderSearch != null && !genderSearch.equals("") && research != null && !research.equals("")) {
+        if (!genderSearch.equals("") && !research.equals("")) {
             list = personService.findPersonByNameAndGenderPage(genderSearch, research, pageable);
-        } else if (genderSearch == null || genderSearch.equals("") && research != null && !research.equals("")) {
+        } else if (genderSearch.equals("") && !research.equals("")) {
             list = personService.findPersonByNamePage(research, pageable);
-        } else if (genderSearch != null && !genderSearch.equals("") && research == null && research.equals("")) {
+        } else if (!genderSearch.equals("") && research.equals("")) {
             list = personService.findPersonByGenderPage(genderSearch, pageable);
         } else {
             list = personService.findByPage(pageable);
         }
 
-        model.addAttribute("peoplelist", list);
-        model.addAttribute("person", new PersonFormDTO());
+        model.addAttribute(PEOPLE_LIST_ATTRIBUTE_NAME, list);
+        model.addAttribute(PERSON_ATTRIBUTE_NAME, new PersonFormDTO());
         model.addAttribute("research", research);
         model.addAttribute("genderSearch", genderSearch);
-        model.addAttribute("occupations", occupationService.findAll());
-        return "register/personregistration";
+        model.addAttribute(OCCUPATIONS_ATTRIBUTE_NAME, occupationService.findAll());
+        return PERSON_REGISTRATION_PAGE;
     }
 
     @PostMapping(value = "/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public String save(@Valid PersonFormDTO personDTO, BindingResult br, Model model, final MultipartFile file) throws IOException {
 
         if (br.hasErrors()) {
-            model.addAttribute("peoplelist", personService.findByPage(PageRequest.of(0, 5, Sort.by("name"))));
-            model.addAttribute("person", personDTO); // keeps the object on the screen
+            model.addAttribute(PEOPLE_LIST_ATTRIBUTE_NAME, personService.findByPage(PageRequest.of(0, 5, Sort.by("name"))));
+            model.addAttribute(PERSON_ATTRIBUTE_NAME, personDTO); // keeps the object on the screen
 
             List<String> msg = new ArrayList<>();
             for (ObjectError obj : br.getAllErrors()) {
@@ -95,8 +100,8 @@ public class PersonController {
             }
 
             model.addAttribute("msg", msg);
-            model.addAttribute("occupations", occupationService.findAll());
-            return "register/personregistration";
+            model.addAttribute(OCCUPATIONS_ATTRIBUTE_NAME, occupationService.findAll());
+            return PERSON_REGISTRATION_PAGE;
         }
 
         // if have some file information, set information
@@ -119,10 +124,10 @@ public class PersonController {
 
     @GetMapping("/edit/{personid}")
     public String edit(@PathVariable("personid") Long personId, Model model) {
-        model.addAttribute("person", personService.findPersonToEditById(personId));
-        model.addAttribute("peoplelist", personService.findByPage(PageRequest.of(0, 5, Sort.by("name"))));
-        model.addAttribute("occupations", occupationService.findAll());
-        return "register/personregistration";
+        model.addAttribute(PERSON_ATTRIBUTE_NAME, personService.findPersonToEditById(personId));
+        model.addAttribute(PEOPLE_LIST_ATTRIBUTE_NAME, personService.findByPage(PageRequest.of(0, 5, Sort.by("name"))));
+        model.addAttribute(OCCUPATIONS_ATTRIBUTE_NAME, occupationService.findAll());
+        return PERSON_REGISTRATION_PAGE;
     }
 
     @GetMapping("/delete/{personid}")
@@ -138,11 +143,11 @@ public class PersonController {
 
         List<PersonFormDTO> list;
 
-        if (genderSearch != null && !genderSearch.equals("") && research != null && !research.equals("")) {
+        if (!genderSearch.equals("") && !research.equals("")) {
             list = personService.findByNameAndGender(research, genderSearch);
-        } else if (genderSearch == null || genderSearch.equals("") && research != null && !research.equals("")) {
+        } else if (genderSearch.equals("") && !research.equals("")) {
             list = personService.findByName(research);
-        } else if (genderSearch != null && !genderSearch.equals("") && research == null && research.equals("")) {
+        } else if (!genderSearch.equals("") && research.equals("")) {
             list = personService.findByGender(genderSearch);
         } else {
             list = personService.findAllFormDto();

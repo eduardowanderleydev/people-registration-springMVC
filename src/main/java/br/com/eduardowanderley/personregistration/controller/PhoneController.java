@@ -1,7 +1,6 @@
 package br.com.eduardowanderley.personregistration.controller;
 
 import br.com.eduardowanderley.personregistration.controller.dto.phone.PhoneDTO;
-import br.com.eduardowanderley.personregistration.model.Person;
 import br.com.eduardowanderley.personregistration.service.PersonService;
 import br.com.eduardowanderley.personregistration.service.PhoneService;
 import org.springframework.beans.factory.annotation.Autowired;
