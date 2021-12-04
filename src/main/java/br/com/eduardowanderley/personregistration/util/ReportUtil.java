@@ -21,21 +21,18 @@ public class ReportUtil implements Serializable {
     @SuppressWarnings("rawtypes")
     public byte[] reportGenerator(List list, String report, ServletContext context) throws JRException {
 
-        /* Cria a lista de dados para relatório */
+        // Create datasource
         JRBeanCollectionDataSource jrbcds = new JRBeanCollectionDataSource(list);
 
-        /* Carrega o caminho do arquivo Jasper compilado */
+        // Load compiled jasper file path
         String jasperPath = context.getRealPath("reports") + File.separator + report + ".jasper";
 
-        /* Carrega o arquivo Jasper passando os dados */
+        // Load jasper file binding data
         @SuppressWarnings("unchecked")
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperPath, new HashMap(), jrbcds);
 
-        /* Exporta para byte [] para fazer o download do pdf */
-        byte[] jasperReturn = JasperExportManager.exportReportToPdf(jasperPrint);
-
-        return jasperReturn;
-
+        // exports as byte []
+        return JasperExportManager.exportReportToPdf(jasperPrint);
     }
 
 }
