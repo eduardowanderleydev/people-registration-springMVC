@@ -32,21 +32,21 @@ public class PersonService {
     }
 
     public List<PersonDTO> findAll() {
-        return personRepository.findAll().stream().map(person -> new PersonDTO(person)).collect(Collectors.toList());
+        return personRepository.findAll().stream().map(PersonDTO::new).collect(Collectors.toList());
     }
 
     public List<PersonFormDTO> findAllFormDto() {
-        return personRepository.findAll().stream().map(person -> new PersonFormDTO(person)).collect(Collectors.toList());
+        return personRepository.findAll().stream().map(PersonFormDTO::new).collect(Collectors.toList());
     }
 
     public PersonDTO findById(Long personid) {
         // TODO change IllegalException for some personalized exception
-        return personRepository.findById(personid).map(PersonDTO::new).orElseThrow(() -> new IllegalArgumentException());
+        return personRepository.findById(personid).map(PersonDTO::new).orElseThrow(IllegalArgumentException::new);
     }
 
     public PersonFormDTO findPersonToEditById(Long personid) {
         // TODO change IllegalException for some personalized exception
-        return personRepository.findById(personid).map(person -> new PersonFormDTO(person)).orElseThrow(() -> new IllegalArgumentException());
+        return personRepository.findById(personid).map(PersonFormDTO::new).orElseThrow(IllegalArgumentException::new);
     }
 
     public void deleteById(Long personId) {
@@ -66,14 +66,14 @@ public class PersonService {
     }
 
     public List<PersonFormDTO> findByNameAndGender(String research, String genderSearch) {
-        return personRepository.findByNameAndGender(research, genderSearch).stream().map(person -> new PersonFormDTO(person)).collect(Collectors.toList());
+        return personRepository.findByNameAndGender(research, genderSearch).stream().map(PersonFormDTO::new).collect(Collectors.toList());
     }
 
     public List<PersonFormDTO> findByName(String research) {
-        return personRepository.findByNameContaining(research).stream().map(person -> new PersonFormDTO(person)).collect(Collectors.toList());
+        return personRepository.findByNameContaining(research).stream().map(PersonFormDTO::new).collect(Collectors.toList());
     }
 
     public List<PersonFormDTO> findByGender(String genderSearch) {
-        return personRepository.findByGender(genderSearch).stream().map(person -> new PersonFormDTO(person)).collect(Collectors.toList());
+        return personRepository.findByGender(genderSearch).stream().map(PersonFormDTO::new).collect(Collectors.toList());
     }
 }

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,28 +25,28 @@ public class PhoneService {
     private PhoneMapper mapper;
 
     public List<PhoneDTO> findAll() {
-        return phoneRepository.findAll().stream().map(phone -> new PhoneDTO(phone)).collect(Collectors.toList());
+        return phoneRepository.findAll().stream().map(PhoneDTO::new).collect(Collectors.toList());
     }
 
     public List<PhoneDTO> findByPerson(Long personid) {
         // TODO change IllegalException for some personalized exception
-        return phoneRepository.findPhonesByPerson(personid).stream().map(phone -> new PhoneDTO(phone)).collect(Collectors.toList());
+        return phoneRepository.findPhonesByPerson(personid).stream().map(PhoneDTO::new).collect(Collectors.toList());
     }
 
     public void save(PhoneDTO phoneDTO, Long personId) {
         Phone phone = mapper.changePhoneDtoToPhone(phoneDTO);
-        Person person = personRepository.findById(personId).orElseThrow(() -> new RuntimeException());
+        Person person = personRepository.findById(personId).orElseThrow(RuntimeException::new);
         phone.setPerson(person);
 
         phoneRepository.save(phone);
     }
 
     public PhoneDTO findById(Long id) {
-        return phoneRepository.findById(id).map(phone -> new PhoneDTO(phone)).orElseThrow(() -> new RuntimeException());
+        return phoneRepository.findById(id).map(PhoneDTO::new).orElseThrow(RuntimeException::new);
     }
 
     public long findPersonIdByPhone(Long id) {
-        Phone phone = phoneRepository.findById(id).orElseThrow(() -> new RuntimeException());
+        Phone phone = phoneRepository.findById(id).orElseThrow(RuntimeException::new);
         return phone.getId();
     }
 
