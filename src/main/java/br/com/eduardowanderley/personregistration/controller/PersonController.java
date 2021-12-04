@@ -25,7 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -169,7 +168,7 @@ public class PersonController {
         if (person != null) {
             response.setContentLength(person.getCurriculum().length);
             response.setContentType(person.getFileCurriculumType());
-            response.setHeader("Content-Disposition", "attachment; filename = \"" + person.getFileCurriculumName() + " \" " );
+            response.setHeader("Content-Disposition", "attachment; filename = \"" + person.getFileCurriculumName() + " \" ");
 
             response.getOutputStream().write(person.getCurriculum());
         }

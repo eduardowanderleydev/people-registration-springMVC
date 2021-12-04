@@ -23,6 +23,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
         http.httpBasic()
                 .and()// disable default configurations
                 .authorizeRequests().antMatchers(HttpMethod.GET, "/*").permitAll() // any user can access index page
+                .antMatchers(HttpMethod.POST, "/h2-console").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.POST, "/person/save").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.GET, "/person/delete/*").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.POST, "/phones/save/*").hasAuthority("ADMIN")

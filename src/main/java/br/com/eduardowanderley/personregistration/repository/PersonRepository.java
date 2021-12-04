@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,14 +15,14 @@ import java.util.List;
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
-    @Query("select p from Person p where p.name like %?1% and p.gender like %?2%")
-    List<Person> findByNameAndGender(String research, String genderSearch);
+    @Query("select p from Person p where lower( p.name ) LIKE LOWER( CONCAT('%',:name,'%') ) and lower( p.gender ) LIKE LOWER( CONCAT('%',:gender,'%') )")
+    List<Person> findByNameAndGender(@Param("name") String name, @Param("gender") String gender);
 
-    @Query("select p from Person p where p.name like %?1%")
-    List<Person> findByName(String research);
+    @Query("select p from Person p where lower( p.name ) LIKE LOWER( CONCAT('%',:name,'%') )")
+    List<Person> findByNameContaining(@Param("name") String name);
 
-    @Query("select p from Person p where p.gender like %?1%")
-    List<Person> findByGender(String genderSearch);
+    @Query("select p from Person p where lower( p.gender ) = lower( ?1 )")
+    List<Person> findByGender(String gender);
 
     default Page<Person> findPersonByNamePage(String name, Pageable pageable) {
 

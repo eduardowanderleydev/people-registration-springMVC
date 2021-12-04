@@ -7,8 +7,6 @@ import br.com.eduardowanderley.personregistration.model.Person;
 import br.com.eduardowanderley.personregistration.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -68,7 +66,7 @@ public class PersonService {
     }
 
     public List<PersonFormDTO> findByName(String research) {
-        return personRepository.findByName(research).stream().map(person -> new PersonFormDTO(person)).collect(Collectors.toList());
+        return personRepository.findByNameContaining(research).stream().map(person -> new PersonFormDTO(person)).collect(Collectors.toList());
     }
 
     public List<PersonFormDTO> findByGender(String genderSearch) {
