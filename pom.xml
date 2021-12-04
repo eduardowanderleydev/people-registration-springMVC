@@ -15,6 +15,7 @@
 	<description>Simple person registration app to improve my knowledge about spring mvc with thymeleaf.</description>
 	<properties>
 		<java.version>11</java.version>
+		<junit.version>4.13.2</junit.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -71,6 +72,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
