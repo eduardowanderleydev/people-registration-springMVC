@@ -7,6 +7,7 @@
 <img src= "https://img.shields.io/badge/SonarLint-CB2029?style=for-the-badge&logo=sonarlint&logoColor=white"/>
 <img src= "https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>
 <img src= "https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E"/>
+<img src= "https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white"/>
 </div>
 
 # People Registration
@@ -68,6 +69,27 @@ $ mvn spring-boot:run
 # The server will start on port:8080
 ```
 
+---
+### Running in Docker
+
+```bash
+# Clone repository
+$ git clone <https://github.com/eduardowanderleydev/people-registration-springMVC.git>
+
+# go to project directory
+$ cd personregistration
+
+# install artefacts
+$ mvn clean install -Dtest.skip=true -Dit.skip=true
+
+# build image
+$ docker build -t person-registration-app .
+
+# run
+$ docker run -p 8080:8080 --name personregistration person-registration-app
+
+# The server will start on port:8080
+```
 
 ---
 ### Run Tests
