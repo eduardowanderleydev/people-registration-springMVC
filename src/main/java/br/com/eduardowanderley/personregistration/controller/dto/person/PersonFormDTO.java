@@ -59,13 +59,20 @@ public class PersonFormDTO implements Serializable {
         this.age = person.getAge();
         this.gender = person.getGender();
         this.birthDate = person.getBirthDate();
-        this.personOccupation = person.getPersonOccupation().getName();
-        this.cep = person.getAddress().getCep();
-        this.rua = person.getAddress().getRua();
-        this.bairro = person.getAddress().getBairro();
-        this.cidade = person.getAddress().getCidade();
-        this.uf = person.getAddress().getUf();
-        this.ibge = person.getAddress().getIbge();
+
+        if (person.getPersonOccupation() != null) {
+            this.personOccupation = person.getPersonOccupation().getName();
+        }
+
+        if (person.getAddress() != null) {
+            this.cep = person.getAddress().getCep();
+            this.rua = person.getAddress().getRua();
+            this.bairro = person.getAddress().getBairro();
+            this.cidade = person.getAddress().getCidade();
+            this.uf = person.getAddress().getUf();
+            this.ibge = person.getAddress().getIbge();
+        }
+
         this.fileCurriculumName = person.getFileCurriculumName();
         this.fileCurriculumType = person.getFileCurriculumType();
         this.curriculum = person.getCurriculum();

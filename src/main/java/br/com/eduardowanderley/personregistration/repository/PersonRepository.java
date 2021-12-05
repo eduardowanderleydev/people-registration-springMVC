@@ -15,13 +15,13 @@ import java.util.List;
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
-    @Query("select p from Person p where lower( p.name ) LIKE LOWER( CONCAT('%',:name,'%') ) and lower( p.gender ) LIKE LOWER( CONCAT('%',:gender,'%') )")
+    @Query("SELECT p FROM Person p WHERE LOWER( p.name ) LIKE LOWER( CONCAT('%',:name,'%') ) AND LOWER( p.gender ) = LOWER( :gender )")
     List<Person> findByNameAndGender(@Param("name") String name, @Param("gender") String gender);
 
-    @Query("select p from Person p where lower( p.name ) LIKE LOWER( CONCAT('%',:name,'%') )")
+    @Query("SELECT p FROM Person p WHERE LOWER( p.name ) LIKE LOWER( CONCAT('%',:name,'%') )")
     List<Person> findByNameContaining(@Param("name") String name);
 
-    @Query("select p from Person p where lower( p.gender ) = lower( ?1 )")
+    @Query("SELECT p FROM Person p WHERE LOWER( p.gender ) = LOWER( ?1 )")
     List<Person> findByGender(String gender);
 
     default Page<Person> findPersonByNamePage(String name, Pageable pageable) {
