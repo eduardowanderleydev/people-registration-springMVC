@@ -23,7 +23,7 @@
 <body>
 <div class="container">
     <div th:include="/navbar.html"></div>
-    <h5>Registration Page</h5>
+    <h5 id="page-message">Registration Page</h5>
 
     <div th:each="msg : ${msg}">
         <span th:text="${msg}"></span>
