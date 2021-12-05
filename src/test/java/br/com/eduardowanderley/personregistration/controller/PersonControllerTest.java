@@ -3,6 +3,7 @@ package br.com.eduardowanderley.personregistration.controller;
 import br.com.eduardowanderley.personregistration.builder.PersonBuilder;
 import br.com.eduardowanderley.personregistration.controller.dto.person.PersonFormDTO;
 import br.com.eduardowanderley.personregistration.model.Person;
+import br.com.eduardowanderley.personregistration.service.OccupationService;
 import br.com.eduardowanderley.personregistration.service.PersonService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,6 +28,9 @@ public class PersonControllerTest {
 
     @Mock
     private PersonService personService;
+
+    @Mock
+    private OccupationService occupationService;
 
     @Mock
     private Model model;

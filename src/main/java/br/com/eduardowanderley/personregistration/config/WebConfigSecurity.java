@@ -34,7 +34,6 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/person/register")
                 .failureUrl("/login/?error=true")
                 .and()
-                .csrf().disable()
                 .logout().logoutSuccessUrl("/login")// maps logout URL and invalidates authenticated user
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
     }
